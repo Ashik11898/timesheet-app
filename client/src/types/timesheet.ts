@@ -22,8 +22,8 @@ export type TimeSheetHeaderSectionProps = {
   isLongLeaveDialogOpen: boolean;
   setIsLongLeaveDialogOpen: (open: boolean) => void;
   longLeaves: LeavePeriod[];
-  tempLongLeave: LeavePeriod | null;
-  handleLongLeaveChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  tempLongLeave: LeavePeriod;
+  handleLongLeaveChange: (field: keyof LongLeave, value: string) => void;
   confirmLongLeave: () => void;
 }
 
@@ -32,7 +32,7 @@ export type TimeSheetTableRowsProps = {
   timeEntries: Record<string, TimeEntry>;
   getEntryForDay: (day: Date) => TimeEntry;
   workingWeekends: Record<string, boolean>;
-  longLeaves: LeavePeriod[];
+  longLeaves: LeavePeriod[] |[];
   highlightedRow: string;
   handleTimeChange: (day: string, field: string, value: string) => void;
   confirmTimeChange: () => void;

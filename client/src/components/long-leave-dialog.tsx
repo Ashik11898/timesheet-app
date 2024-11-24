@@ -7,7 +7,7 @@ import { LongLeave } from "../types/timesheet"
 type LongLeaveDialogProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  tempLongLeave: LongLeave
+  tempLongLeave: LongLeave,
   handleLongLeaveChange: (field: keyof LongLeave, value: string) => void
   confirmLongLeave: () => void
 }
@@ -43,7 +43,7 @@ export function LongLeaveDialog({
             <Input
               id="endDate"
               type="date"
-              value={tempLongLeave.endDate}
+              value={tempLongLeave?.endDate}
               onChange={(e) => handleLongLeaveChange("endDate", e.target.value)}
             />
           </div>

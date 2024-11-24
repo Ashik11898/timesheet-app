@@ -24,7 +24,7 @@ export default function TimeSheetTable() {
     selectedYear,
     changeYear,
     days,
-    timeEntries,
+    //timeEntries,
     handleTimeChange,
     confirmTimeChange,
     workingWeekends,
@@ -71,7 +71,7 @@ export default function TimeSheetTable() {
         const isWeekendDay = isWeekend(day);
         const isWorkingWeekend = workingWeekends[dayString];
         const onLongLeave = isOnLongLeave(day, longLeaves);
-        const isHighlighted = dayString === highlightedRow;
+       // const isHighlighted = dayString === highlightedRow;
   
         if (onLongLeave || entry.isPublicHoliday) {
           return [

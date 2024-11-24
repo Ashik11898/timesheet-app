@@ -1,15 +1,23 @@
+import { cn } from "@/lib/utils";
+//import { isOnLongLeave } from "@/utils/date-utils";
+//import { isWeekend } from "date-fns";
+import { Table } from "lucide-react";
+import { format } from "date-fns";
+import { TableHeader, TableRow, TableHead, TableBody, TableCell } from "./ui/table";
+import { TimeSheetTableRowsProps } from "@/types/timesheet";
+
 export default function TimeSheetTableRows({
     days,
     getEntryForDay,
-    workingWeekends,
-    longLeaves,
+   // workingWeekends,
+   // longLeaves,
     highlightedRow,
-    handleTimeChange,
-    handleWeekendWork,
-    setSelectedDay,
-    setTempEntry,
-    setIsDialogOpen,
-  }) {
+    //handleTimeChange,
+    //handleWeekendWork,
+    //setSelectedDay,
+    //setTempEntry,
+   // setIsDialogOpen,
+  }:TimeSheetTableRowsProps) {
     return (
       <div className="rounded-lg border overflow-hidden">
         <Table>
@@ -25,12 +33,12 @@ export default function TimeSheetTableRows({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {days.map((day) => {
+            {days.map((day:any) => {
               const dayString = format(day, "yyyy-MM-dd");
               const entry = getEntryForDay(day);
-              const isWeekendDay = isWeekend(day);
-              const isWorkingWeekend = workingWeekends[dayString];
-              const onLongLeave = isOnLongLeave(day, longLeaves);
+              //const isWeekendDay = isWeekend(day);
+              //const isWorkingWeekend = workingWeekends[dayString];
+             // const onLongLeave = isOnLongLeave(day, longLeaves);
               const isHighlighted = dayString === highlightedRow;
   
               return (
@@ -44,7 +52,7 @@ export default function TimeSheetTableRows({
                   <TableCell className="p-4">{format(day, "dd")}</TableCell>
                   <TableCell className="p-4">{format(day, "EEEE")}</TableCell>
                   {/* Render different row content based on conditions */}
-                  <TimeSheetTableRowContent
+                  {/* <TimeSheetTableRowContent
                     dayString={dayString}
                     day={day}
                     entry={entry}
@@ -56,7 +64,7 @@ export default function TimeSheetTableRows({
                     setSelectedDay={setSelectedDay}
                     setTempEntry={setTempEntry}
                     setIsDialogOpen={setIsDialogOpen}
-                  />
+                  /> */}
                 </TableRow>
               );
             })}
