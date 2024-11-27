@@ -1,7 +1,10 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import { TimeEntry, LongLeave } from "../types/timesheet";
-import { getDaysInMonth} from "../utils/date-utils";
+import { getDaysInMonth,calculateTotalHours, isWeekend, isOnLongLeave} from "../utils/date-utils";
+import { jsPDF } from "jspdf";
+import  "jspdf-autotable";
+
 
 export function useTimeSheet(currentYear: number) {
   const [selectedMonth, setSelectedMonth] = useState<string | undefined>(undefined);
@@ -138,6 +141,67 @@ export function useTimeSheet(currentYear: number) {
     }
   };
 
+
+  const exportTableToPDF = () => {
+    const doc = new jsPDF();
+    const table = tableRef.current;
+  
+    // Ensure the table is available
+    if (table) {
+      // Manually map the rows to be passed to autoTable
+      const rows = days.map((day) => {
+        const dayString = format(day, "yyyy-MM-dd");
+        const entry = getEntryForDay(day);
+        const isWeekendDay = isWeekend(day);
+        const isWorkingWeekend = workingWeekends[dayString];
+        const onLongLeave = isOnLongLeave(day, longLeaves);
+       // const isHighlighted = dayString === highlightedRow;
+  
+        if (onLongLeave || entry.isPublicHoliday) {
+          return [
+            format(day, "dd"),
+            format(day, "EEEE"),
+            '—', '—','—', '—', // Placeholder for empty cells
+            onLongLeave ? 'On Long Leave' : 'Public Holiday',
+          ];
+        } else if (isWeekendDay && !isWorkingWeekend) {
+          return [
+            format(day, "dd"),
+            // format(day, "EEEE"),
+            '—', '—','—', '—' // Placeholder for empty cells
+            
+          ];
+        } else {
+          return [
+            format(day, "dd"),
+            // format(day, "EEEE"),
+            entry.startTime || '',
+            entry.lunchTime || '',
+            entry.endTime || '',
+            calculateTotalHours(entry),
+            'Edit', // Placeholder for actions
+          ];
+        }
+      });
+  
+      // TypeScript does not recognize autoTable on jsPDF by default
+      (doc as any).autoTable({
+        head: [
+          ['Date', 'Start Time', 'Lunch Time', 'End Time', 'Total Hours'],
+        ],
+        body: rows,
+        startY: 20,
+      });
+  
+      // Save the PDF
+      doc.save("timesheet.pdf");
+    } else {
+      console.error("Table reference is null");
+    }
+  };
+
+
+
   useEffect(() => {
     if (!isDialogOpen && tableRef.current) {
       tableRef.current.style.overflow = "auto";
@@ -177,5 +241,6 @@ export function useTimeSheet(currentYear: number) {
     tempEntry,
     setTempEntry,
     getEntryForDay,
+    exportTableToPDF
   };
 }
