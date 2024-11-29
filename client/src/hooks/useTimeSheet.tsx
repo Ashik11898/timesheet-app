@@ -166,14 +166,14 @@ export function useTimeSheet(currentYear: number) {
           return [
             format(day, "dd"),
             format(day, "EEEE"),
-            '—', '—','—', '—', // Placeholder for empty cells
+            '—', '—','—', // Placeholder for empty cells
             onLongLeave ? 'On Long Leave' : 'Public Holiday',
           ];
         } else if (isWeekendDay && !isWorkingWeekend) {
           return [
             format(day, "dd"),
-            // format(day, "EEEE"),
-            '—', '—','—', '—','—', '—', // Placeholder for empty cells
+          
+            '—', '—','—', '—','—', 
             
           ];
         } else {
@@ -195,14 +195,14 @@ export function useTimeSheet(currentYear: number) {
       // TypeScript does not recognize autoTable on jsPDF by default
       (doc as any).autoTable({
         head: [
-          ['Date', 'Start Time', 'Lunch Start Time', 'Lunch End Time', 'End Time', 'Total Hours'],
+          ['Date', 'Start Time', 'Lunch Start', 'Lunch End', 'End Time', 'Total Hours'],
         ],
         body: rows,
         foot:[
           [`Days Present: ${ attendance.daysPresent}`,`Days Absent: ${ attendance.daysAbsent}`,`Total Hours: ${ attendance.totalHours}`,'', '', '' ],
         ],
        
-       
+      
         footStyles:{
           fillColor:"#fff",
           textColor: "#000",
