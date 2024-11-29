@@ -64,12 +64,23 @@ export function TimeEntryDialog({
             />
           </div>
           <div className="grid grid-cols-2 items-center gap-4">
-            <Label htmlFor={`lunchTime-${selectedDay}`}>Lunch Time</Label>
+            <Label htmlFor={`lunchTime-${selectedDay}`}>Lunch start Time</Label>
             <Input
               id={`lunchTime-${selectedDay}`}
               type="time"
               value={tempEntry.lunchTime}
               onChange={(e) => handleTempTimeChange("lunchTime", e.target.value)}
+              disabled={tempEntry.isAbsent || tempEntry.isPublicHoliday}
+              className="bg-green-50 border-green-200 focus:border-green-300 focus:ring-green-300"
+            />
+          </div>
+          <div className="grid grid-cols-2 items-center gap-4">
+            <Label htmlFor={`lunchTime-${selectedDay}`}>Lunch end Time</Label>
+            <Input
+              id={`lunchTime-${selectedDay}`}
+              type="time"
+              value={tempEntry.lunchTimeEnd}
+              onChange={(e) => handleTempTimeChange("lunchTimeEnd", e.target.value)}
               disabled={tempEntry.isAbsent || tempEntry.isPublicHoliday}
               className="bg-green-50 border-green-200 focus:border-green-300 focus:ring-green-300"
             />

@@ -8,9 +8,11 @@ import  "jspdf-autotable";
 
 export function useTimeSheet(currentYear: number) {
   const [selectedMonth, setSelectedMonth] = useState<string | undefined>(undefined);
+  const [attendance,setAttendance]=useState({"daysPresent":0,"daysAbsent":0,"totalHours":0})
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [defaultStartTime, setDefaultStartTime] = useState("09:00");
   const [defaultLunchTime, setDefaultLunchTime] = useState("12:00");
+  const [defaultEndLunchTime, setdefaultEndLunchTime] = useState("13:00");
   const [defaultEndTime, setDefaultEndTime] = useState("17:00");
   const [timeEntries, setTimeEntries] = useState<{ [key: string]: TimeEntry }>({});
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
@@ -90,6 +92,7 @@ export function useTimeSheet(currentYear: number) {
       timeEntries[dayString] || {
         startTime: defaultStartTime,
         lunchTime: defaultLunchTime,
+        lunchTimeEnd:defaultEndLunchTime,
         endTime: defaultEndTime,
         isAbsent: false,
         isPublicHoliday: false,
@@ -108,6 +111,7 @@ export function useTimeSheet(currentYear: number) {
         [day]: {
           startTime: defaultStartTime,
           lunchTime: defaultLunchTime,
+          lunchTimeEnd:defaultEndLunchTime,
           endTime: defaultEndTime,
           isAbsent: false,
           isPublicHoliday: false,
@@ -141,6 +145,7 @@ export function useTimeSheet(currentYear: number) {
     }
   };
 
+  
 
   const exportTableToPDF = () => {
     const doc = new jsPDF();
@@ -168,30 +173,46 @@ export function useTimeSheet(currentYear: number) {
           return [
             format(day, "dd"),
             // format(day, "EEEE"),
-            '—', '—','—', '—' // Placeholder for empty cells
+            '—', '—','—', '—','—', '—', // Placeholder for empty cells
             
           ];
         } else {
           return [
             format(day, "dd"),
-            // format(day, "EEEE"),
             entry.startTime || '',
             entry.lunchTime || '',
+            entry.lunchTimeEnd || '',
             entry.endTime || '',
             calculateTotalHours(entry),
             'Edit', // Placeholder for actions
           ];
         }
       });
-  
+     
+      
+      
+
       // TypeScript does not recognize autoTable on jsPDF by default
       (doc as any).autoTable({
         head: [
-          ['Date', 'Start Time', 'Lunch Time', 'End Time', 'Total Hours'],
+          ['Date', 'Start Time', 'Lunch Start Time', 'Lunch End Time', 'End Time', 'Total Hours'],
         ],
         body: rows,
-        startY: 20,
+        foot:[
+          [`Days Present: ${ attendance.daysPresent}`,`Days Absent: ${ attendance.daysAbsent}`,`Total Hours: ${ attendance.totalHours}`,'', '', '' ],
+        ],
+       
+       
+        footStyles:{
+          fillColor:"#fff",
+          textColor: "#000",
+          fontSize: 10,
+          cellPadding:5,
+          halign: "center", // Center alignment
+          valign: "middle", // Middle alignment
+        }
       });
+      
   
       // Save the PDF
       doc.save("timesheet.pdf");
@@ -211,6 +232,8 @@ export function useTimeSheet(currentYear: number) {
   return {
     selectedMonth,
     setSelectedMonth,
+    attendance,
+    setAttendance,
     selectedYear,
     changeYear,
     days,
@@ -230,6 +253,8 @@ export function useTimeSheet(currentYear: number) {
     setDefaultStartTime,
     defaultLunchTime,
     setDefaultLunchTime,
+    defaultEndLunchTime,
+    setdefaultEndLunchTime,
     defaultEndTime,
     setDefaultEndTime,
     highlightedRow,

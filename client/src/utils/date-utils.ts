@@ -18,6 +18,8 @@ export const calculateTotalHours = (entry: TimeEntry) => {
   if (!entry.startTime || !entry.endTime) return ""
   const start = parse(entry.startTime, "HH:mm", new Date())
   const end = parse(entry.endTime, "HH:mm", new Date())
+  const lunchStart = parse(entry.lunchTime, "HH:mm", new Date())
+  const lunchEnd = parse(entry.lunchTimeEnd, "HH:mm", new Date())
   const totalMinutes = differenceInMinutes(end, start)
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60

@@ -1,11 +1,11 @@
 "use client";
-
+import { useEffect } from "react";
 import { useTimeSheet } from "../hooks/useTimeSheet"
 import { TimeSheetHeader } from "../components/timeSheet-ui/timesheet-header";
 import { DefaultTimes } from "../components/timeSheet-ui/default-times";
 import { LongLeaveDialog } from "../components/timeSheet-ui/long-leave-dialog";
 import { TimeEntryDialog } from "../components/timeSheet-ui/time-entry-dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow,TableFooter } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,17 +13,19 @@ import { format } from "date-fns";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { calculateTotalHours, isWeekend, isOnLongLeave } from "../utils/date-utils";
 import { TimeEntry } from "../types/timesheet";
-import { useUserContext} from "@/context/AuthContext";
 
 export default function TimeSheetTable() {
   const currentYear = new Date().getFullYear();
+
   const {
     selectedMonth,
     setSelectedMonth,
+    attendance,
+    setAttendance,
     selectedYear,
     changeYear,
     days,
-    //timeEntries,
+    timeEntries,
     handleTimeChange,
     confirmTimeChange,
     workingWeekends,
@@ -38,6 +40,8 @@ export default function TimeSheetTable() {
     setDefaultStartTime,
     defaultLunchTime,
     setDefaultLunchTime,
+    defaultEndLunchTime,
+    setdefaultEndLunchTime,
     defaultEndTime,
     setDefaultEndTime,
     highlightedRow,
@@ -52,18 +56,83 @@ export default function TimeSheetTable() {
     exportTableToPDF
   } = useTimeSheet(currentYear);
 
-  const user= useUserContext()
 
   const handleTempTimeChange = (field: keyof TimeEntry, value: string | boolean) => {
     setTempEntry(prev => prev ? { ...prev, [field]: value } : null)
   }
 
+  useEffect(() => {
+
+    const rows = days.map((day) => {
+      const dayString = format(day, "yyyy-MM-dd");
+      const entry = getEntryForDay(day);
+      const isWeekendDay = isWeekend(day);
+      const isWorkingWeekend = workingWeekends[dayString];
+      const onLongLeave = isOnLongLeave(day, longLeaves);
+     // const isHighlighted = dayString === highlightedRow;
+
+      if (onLongLeave || entry.isPublicHoliday) {
+        return [
+          format(day, "dd"),
+          format(day, "EEEE"),
+          '—', '—','—', '—', // Placeholder for empty cells
+          onLongLeave ? 'On Long Leave' : 'Public Holiday',
+        ];
+      } else if (isWeekendDay && !isWorkingWeekend) {
+        return [
+          format(day, "dd"),
+          // format(day, "EEEE"),
+          '—', '—','—', '—','—', '—', // Placeholder for empty cells
+          
+        ];
+      } else {
+        return [
+          format(day, "dd"),
+          // format(day, "EEEE"),
+          entry.startTime || '',
+          entry.lunchTime || '',
+          entry.lunchTimeEnd || '',
+          entry.endTime || '',
+          calculateTotalHours(entry),
+          'Edit', // Placeholder for actions
+        ];
+      }
+    });
+
+
+     // Initialize counters
+     let presentDays = 0;
+     let absentDays = 0;
+     let holidays = 0;
+     let otherStatuses = 0;
+
+     // Loop through the data to categorize days
+     rows.forEach(row => {
+       const status = row[5]; // The 6th item (index 5)
+       if (status === "Absent") {
+         absentDays++;
+       } else if (status === "—") {
+         holidays++;
+       } else {
+         presentDays++;
+       }
+     });
+
+     setAttendance((prevstate) => ({
+      ...prevstate, // Spread the previous state correctly
+      daysPresent: presentDays,
+      daysAbsent: absentDays,
+      totalHours: 0,
+    }));
+    
+     console.log("presentDays",presentDays,"absentDays",absentDays);
+  },[timeEntries,selectedMonth])
+
+
 
   return (
     <div className="space-y-3 p-3 w-[1200px] mx-auto">
-      <div>
-        {JSON.stringify(user)}
-      </div>
+   
       <TimeSheetHeader 
         selectedYear={selectedYear}
         selectedMonth={selectedMonth}
@@ -73,9 +142,11 @@ export default function TimeSheetTable() {
       <DefaultTimes 
         defaultStartTime={defaultStartTime}
         defaultLunchTime={defaultLunchTime}
+        defaultEndLunchTime={defaultEndLunchTime}
         defaultEndTime={defaultEndTime}
         setDefaultStartTime={setDefaultStartTime}
         setDefaultLunchTime={setDefaultLunchTime}
+        setdefaultEndLunchTime={setdefaultEndLunchTime}
         setDefaultEndTime={setDefaultEndTime}
       />
       {selectedMonth && (
@@ -115,7 +186,8 @@ export default function TimeSheetTable() {
                   <TableHead className="w-[100px] p-4">Date</TableHead>
                   <TableHead className="p-4">Day</TableHead>
                   <TableHead className="p-4">Start Time</TableHead>
-                  <TableHead className="p-4">Lunch Time</TableHead>
+                  <TableHead className="p-4">Lunch Start Time</TableHead>
+                  <TableHead className="p-4">Lunch End Time</TableHead>
                   <TableHead className="p-4">End Time</TableHead>
                   <TableHead className="p-4">Total Hours</TableHead>
                   <TableHead className="p-4">Actions</TableHead>
@@ -190,6 +262,16 @@ export default function TimeSheetTable() {
                               disabled={entry.isAbsent || entry.isPublicHoliday}
                             />
                           </TableCell>
+
+                          <TableCell className="p-4">
+                            <Input
+                              type="time"
+                              value={entry.lunchTimeEnd}
+                              onChange={(e) => handleTimeChange(dayString, "lunchTimeEnd", e.target.value)}
+                              className="w-28 bg-green-50 border-green-200 focus:border-green-300 focus:ring-green-300"
+                              disabled={entry.isAbsent || entry.isPublicHoliday}
+                            />
+                          </TableCell>
                           <TableCell className="p-4">
                             <Input
                               type="time"
@@ -219,6 +301,16 @@ export default function TimeSheetTable() {
                   )
                 })}
               </TableBody>
+              <TableFooter style={{fontSize: '20px',color: 'blue'}}>
+                      
+                      
+                <TableRow>
+                  <TableCell colSpan={3} style={{color:'#355F2E'}}>No of Days Present: {attendance.daysPresent} </TableCell>
+                  <TableCell colSpan={3} style={{color:'#FA4032'}}> No of Days Absent: {attendance.daysAbsent}</TableCell>
+                  <TableCell  colSpan={3} style={{color: '#FAB12F' }}>Total working Hours:</TableCell>   
+                </TableRow>
+              </TableFooter>
+
             </Table>
           </div>
           <TimeEntryDialog 

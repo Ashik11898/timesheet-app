@@ -1,6 +1,7 @@
 export type TimeEntry = {
   startTime: string
   lunchTime: string
+  lunchTimeEnd:string
   endTime: string
   isAbsent: boolean
   isPublicHoliday: boolean
