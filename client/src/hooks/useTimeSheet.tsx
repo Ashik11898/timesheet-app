@@ -165,32 +165,47 @@ export function useTimeSheet(currentYear: number) {
         if (onLongLeave || entry.isPublicHoliday) {
           return [
             format(day, "dd"),
-            format(day, "EEEE"),
-            '—', '—','—', // Placeholder for empty cells
+            '_',
+            '_', '_','_', // Placeholder for empty cells
             onLongLeave ? 'On Long Leave' : 'Public Holiday',
           ];
         } else if (isWeekendDay && !isWorkingWeekend) {
           return [
             format(day, "dd"),
           
-            '—', '—','—', '—','—', 
+            '_','_','_','_','_', 
             
           ];
         } else {
+
+          let isAbsent = calculateTotalHours(entry)
           return [
             format(day, "dd"),
-            entry.startTime || '',
-            entry.lunchTime || '',
-            entry.lunchTimeEnd || '',
-            entry.endTime || '',
+            (isAbsent !== "Absent" && isAbsent !== "Public Holiday") ? entry.startTime : '_',
+            (isAbsent !== "Absent" && isAbsent !== "Public Holiday") ? entry.lunchTime : '_',
+            (isAbsent !== "Absent" && isAbsent !== "Public Holiday") ? entry.lunchTimeEnd : '_',
+            (isAbsent !== "Absent" && isAbsent !== "Public Holiday") ? entry.endTime : '_',
             calculateTotalHours(entry),
             'Edit', // Placeholder for actions
           ];
         }
       });
      
+
+      (doc as any).autoTable({
+        startY: 10, // Start at the top with some padding
+        body: [
+          ['Name:', 'Mohamed Ashik', 'Role:', 'React js Developer']  // Both Name and Role in a single row
+        ],
+        styles: {
+          halign: 'left', // Left alignment for the name and role
+          fontSize: 12,
+          cellPadding: 2,
+          textColor: "#000",
+        }
+      });
       
-      
+      const columnWidths = [20, 27, 27, 27, 40, 40];
 
       // TypeScript does not recognize autoTable on jsPDF by default
       (doc as any).autoTable({
@@ -198,19 +213,52 @@ export function useTimeSheet(currentYear: number) {
           ['Date', 'Start Time', 'Lunch Start', 'Lunch End', 'End Time', 'Total Hours'],
         ],
         body: rows,
-        foot:[
-          [`Days Present: ${ attendance.daysPresent}`,`Days Absent: ${ attendance.daysAbsent}`,`Total Hours: ${ attendance.totalHours}`,'', '', '' ],
+        foot: [
+          ['', '', '', '',`Present Days:  ${attendance.daysPresent}`, `Absent Days: ${attendance.daysAbsent}`],
         ],
-       
-      
-        footStyles:{
-          fillColor:"#fff",
+        columnStyles: {
+          0: { cellWidth: columnWidths[0] }, // Adjust column widths as needed
+          1: { cellWidth: columnWidths[1] },
+          2: { cellWidth: columnWidths[2] },
+          3: { cellWidth: columnWidths[3] },
+          4: { cellWidth: columnWidths[4] },
+          5: { cellWidth: columnWidths[5]},
+        },
+        headStyles: {
+          textColor: "#fff",
+        },
+        bodyStyles: {
+          fontSize: 11,
           textColor: "#000",
-          fontSize: 10,
-          cellPadding:5,
+          cellPadding: 1.5,
+        },
+        footStyles: {
+          fillColor: "#FFF",
+          textColor: "#986801",
+          fontSize: 12,
+          cellPadding: { top: 2, right: 0, bottom: 2, left: 0 },
           halign: "center", // Center alignment
           valign: "middle", // Middle alignment
-        }
+        },
+      
+        didParseCell: function (data: any) {
+          if (data.section === 'body' && data.column.index === 5) {
+            const cellValue = data.cell.text?.[0] || '';
+            data.cell.styles.fontStyle = "bold";
+            if (['Absent', 'On Long Leave', ].includes(cellValue)) {
+              data.cell.styles.textColor = "#ff0000"; // Red for specific values
+            } 
+            else if(['Public Holiday'].includes(cellValue)){data.cell.styles.textColor = "#E85C0D"}
+            else {
+              data.cell.styles.textColor = "#00712D"; // Blue for other values
+              
+            }
+            
+          }
+        },
+
+       
+        
       });
       
   

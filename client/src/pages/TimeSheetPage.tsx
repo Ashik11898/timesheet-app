@@ -104,25 +104,31 @@ export default function TimeSheetTable() {
      let presentDays = 0;
      let absentDays = 0;
      let holidays = 0;
-     let otherStatuses = 0;
+     let totalHours = 0;
 
      // Loop through the data to categorize days
      rows.forEach(row => {
-       const status = row[5]; // The 6th item (index 5)
+       const status = row[5]; 
+      
+       // The 6th item (index 5)
        if (status === "Absent") {
          absentDays++;
        } else if (status === "—") {
          holidays++;
        } else {
+        
+        totalHours+=Number(status[0])
          presentDays++;
        }
      });
+
+     console.log("totalHours",totalHours);
 
      setAttendance((prevstate) => ({
       ...prevstate, // Spread the previous state correctly
       daysPresent: presentDays,
       daysAbsent: absentDays,
-      totalHours: 0,
+      totalHours: totalHours,
     }));
     
      console.log("presentDays",presentDays,"absentDays",absentDays);
