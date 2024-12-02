@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 //import { isWeekend } from "date-fns";
 import { Table } from "lucide-react";
 import { format } from "date-fns";
-import { TableHeader, TableRow, TableHead, TableBody, TableCell } from "./ui/table";
+import { TableHeader, TableRow, TableHead, TableBody, TableCell } from "../ui/table";
 import { TimeSheetTableRowsProps } from "@/types/timesheet";
 
 export default function TimeSheetTableRows({
