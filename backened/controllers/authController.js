@@ -6,7 +6,9 @@ const handleLogin = (req, res) => {
     const { email,password } = req.body;
     console.log(req.body);
 
-    if (userCredentials.email === email && userCredentials.password === password) {
+    const user = checkCredentials(userCredentials,email,password)
+
+    if (user.isValid) {
         const accessToken = generateAccessToken({ password, email });
         const refreshToken = generateRefreshToken({ email });
 
@@ -17,12 +19,16 @@ const handleLogin = (req, res) => {
             maxAge: 24 * 60 * 60 * 1000,
         });
 
-        return res.json({ accessToken,isValid:true });
+        return res.json({ accessToken,isValid:true,name:user.username });
     } else {
         return res.status(401).json({ message: 'Invalid credentials' });
     }
 };
 
+const checkCredentials =(credentials, email, password)=> {
+    const user = credentials.find(user => user.email === email && user.password === password);
+    return user ? { isValid: true, username: user.username } : { isValid: false };
+}
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
