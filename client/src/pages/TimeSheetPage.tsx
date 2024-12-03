@@ -116,7 +116,6 @@ export default function TimeSheetTable() {
        } else if (status === "—") {
          holidays++;
        } else {
-        console.log("set",status);
         
          totalHours+=Number(status[0])
          presentDays++;
@@ -317,7 +316,6 @@ export default function TimeSheetTable() {
                   <TableCell  colSpan={3} style={{color: '#FAB12F' }}>Total working Hours:</TableCell>   
                 </TableRow>
               </TableFooter>
-
             </Table>
           </div>
           <TimeEntryDialog 

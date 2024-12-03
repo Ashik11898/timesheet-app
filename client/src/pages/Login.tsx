@@ -40,7 +40,7 @@ export default function LoginForm() {
     <div className="w-full min-h-screen flex items-center justify-center bg-[#257180]">
       <div className="w-full max-w-md bg-[#F2E5BF] p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-[#257180] text-center">Welcome Back</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
           <div className="space-y-2">
             <Label htmlFor="email" className="text-left text-[#257180] text-lg font-medium">Email</Label>
             <div className="relative">
@@ -50,6 +50,7 @@ export default function LoginForm() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autoComplete="off"
                 required
                 className="w-full pl-10 pr-3 py-2 border-2 border-[#FD8B51] focus:border-[#CB6040] focus:ring-[#CB6040] bg-[#F2E5BF] text-[#257180] placeholder-[#CB6040]/50"
                 placeholder="your@email.com"
@@ -64,6 +65,7 @@ export default function LoginForm() {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
+                autoComplete="off"
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full pl-10 pr-10 py-2 border-2 border-[#FD8B51] focus:border-[#CB6040] focus:ring-[#CB6040] bg-[#F2E5BF] text-[#257180] placeholder-[#CB6040]/50"
