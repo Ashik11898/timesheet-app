@@ -1,12 +1,12 @@
  const userCredentials = [
     {
         username: 'Mohamed Ashik',
-        password: 'password123',
+        password: '!2asdf#Ad',
         email: 'testuser@example.com'
     },
     {
         username: 'Malikah Agowan',
-        password: 'password123',
+        password: '!2asdf#Ad',
         email: 'testuser@example2.com'
     }
  ]
