@@ -6,9 +6,10 @@ export type User ={
 
 export type LoginResponse ={
     accessToken: string;
-    user: {
-      name: string;
-      email: string;
-    };
+    // user: {
+    //   name: string;
+    //   email: string;
+    // };
+    name:string | null
   }
   

@@ -11,6 +11,7 @@ export const getDaysInMonth = (month: number, year: number) => {
   }
   return days
 }
+let totalDays = []
 
 export const calculateTotalHours = (entry: TimeEntry) => {
   if (entry.isAbsent) return "Absent"
@@ -22,7 +23,11 @@ export const calculateTotalHours = (entry: TimeEntry) => {
   // const lunchEnd = parse(entry.lunchTimeEnd, "HH:mm", new Date())
   const totalMinutes = differenceInMinutes(end, start)
   const hours = Math.floor(totalMinutes / 60)
-  const minutes = totalMinutes % 60
+  const minutes = totalMinutes % 60;
+  let hrsmin = `${hours}:${minutes}`
+  console.log(hrsmin);
+  totalDays.push(hrsmin)
+  
   return `${hours}h${minutes > 0 ? ` ${minutes}m` : ''}`
 }
 

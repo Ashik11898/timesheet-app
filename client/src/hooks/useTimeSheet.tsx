@@ -10,7 +10,7 @@ export function useTimeSheet(currentYear: number) {
   const [selectedMonth, setSelectedMonth] = useState<string | undefined>(undefined);
   const [attendance,setAttendance]=useState({"daysPresent":0,"daysAbsent":0,"totalHours":0})
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [defaultStartTime, setDefaultStartTime] = useState("09:00");
+  const [defaultStartTime, setDefaultStartTime] = useState("08:30");
   const [defaultLunchTime, setDefaultLunchTime] = useState("12:00");
   const [defaultEndLunchTime, setdefaultEndLunchTime] = useState("13:00");
   const [defaultEndTime, setDefaultEndTime] = useState("17:00");
@@ -150,7 +150,8 @@ export function useTimeSheet(currentYear: number) {
   const exportTableToPDF = () => {
     const doc = new jsPDF();
     const table = tableRef.current;
-  
+    const username = localStorage.getItem("username")
+
     // Ensure the table is available
     if (table) {
       // Manually map the rows to be passed to autoTable
@@ -195,7 +196,7 @@ export function useTimeSheet(currentYear: number) {
       (doc as any).autoTable({
         startY: 10, // Start at the top with some padding
         body: [
-          ['Name:', 'Mohamed Ashik', 'Role:', 'React js Developer']  // Both Name and Role in a single row
+          ['Name:', username, 'Month:', selectedMonth]  // Both Name and Role in a single row
         ],
         styles: {
           halign: 'left', // Left alignment for the name and role

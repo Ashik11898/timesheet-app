@@ -116,13 +116,14 @@ export default function TimeSheetTable() {
        } else if (status === "—") {
          holidays++;
        } else {
+        console.log("set",status);
         
-        totalHours+=Number(status[0])
+         totalHours+=Number(status[0])
          presentDays++;
        }
      });
 
-     console.log("totalHours",totalHours);
+    // console.log("totalHours",totalHours/8);
 
      setAttendance((prevstate) => ({
       ...prevstate, // Spread the previous state correctly

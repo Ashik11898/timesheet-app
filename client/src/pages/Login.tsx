@@ -24,10 +24,17 @@ export default function LoginForm() {
       url: '/login',
       data:{email:email,password:password} // API endpoint
     });
+    response && response.name && localStorage.setItem("username",response.name)
+    console.log(response);
+    
     setUser(response && response.accessToken)
     navigate("/timesheetPage")
   }
   
+  const openRegisterPage=(e:any)=>{
+    e.preventDefault()
+    navigate("/registerPage")
+  }
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-[#257180]">
@@ -79,6 +86,8 @@ export default function LoginForm() {
           <Button type="submit" className="w-full bg-[#FD8B51] text-[#F2E5BF] hover:bg-[#CB6040] transition-colors duration-300 text-lg py-3">Sign In</Button>
           <div className="text-sm flex justify-between">
               <a href="#" className="font-medium text-[#CB6040] hover:text-[#FD8B51]">Forgot your password?</a>
+              <div onClick={(e)=>openRegisterPage(e)} className="font-medium text-[#CB6040] hover:text-[#FD8B51]">Create Employee</div>
+
           </div>
         </form>
         
