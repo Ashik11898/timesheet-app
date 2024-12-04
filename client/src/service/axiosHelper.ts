@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // Create an Axios instance with default settings
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api', // Replace with your API base URL
+  baseURL: 'https://timesheet-app-server.vercel.app', // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json',
   },

@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ['http://localhost:5000','http://localhost:5173','https://timesheet-app-eight.vercel.app','http://192.168.151.117:5173','https://timesheet-app-server.vercel.app'], // Update with your frontend origin
+    origin: ['http://localhost:5000','http://localhost:5173','https://timesheet-app-eight.vercel.app','https://timesheet-app-server.vercel.app'], // Update with your frontend origin
     credentials: true // Allow cookies to be sent
 }));
 
