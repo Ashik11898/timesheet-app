@@ -37,7 +37,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-[#257180]">
+    <div className="w-full min-h-screen flex items-center justify-center bg-[#257180] p-6">
       <div className="w-full max-w-md bg-[#F2E5BF] p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-[#257180] text-center">Welcome Back</h2>
         <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
