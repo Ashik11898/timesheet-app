@@ -4,12 +4,11 @@ export type User ={
     password:string,
 }
 
-export type LoginResponse ={
-    accessToken: string;
-    // user: {
-    //   name: string;
-    //   email: string;
-    // };
-    name:string | null
-  }
+export type LoginResponse = {
+    name: string | null;
+    accessToken:string
+};
   
+export type ChatResponse = {
+    results:string[]
+};  

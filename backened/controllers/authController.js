@@ -19,7 +19,8 @@ const handleLogin = (req, res) => {
             maxAge: 24 * 60 * 60 * 1000,
         });
 
-        return res.json({ accessToken,isValid:true,name:user.username });
+        return res
+        .json({ isValid: true, name: user.username,accessToken });
     } else {
         return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -31,21 +32,13 @@ const checkCredentials =(credentials, email, password)=> {
 }
 
 const verifyToken = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-console.log("jwt cookies:",req.cookies.jwt);
+    const cookies = req.cookies.jwt;
+    if (!cookies) return res.status(401).json({ message: 'No token provided user needs to login' });
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'No token provided' });
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(403).json({ message: 'Invalid or expired token' });
-        }
-
-        req.user = decoded; // Attach the decoded token payload to the request
+    jwt.verify(cookies, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+        if (err) return res.status(403).json({ message: 'Invalid token' });
+        const accessToken = generateAccessToken({"email":decoded.email, "password":decoded.password})
+        res.json({ accessToken })
         next();
     });
 };

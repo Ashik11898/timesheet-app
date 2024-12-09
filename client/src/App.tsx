@@ -1,6 +1,6 @@
 import './App.css'
 import LoginForm from './pages/Login'
-import RegisterForm from './pages/RegisterForm'
+import ChatPage from './pages/ChatPage'
 import TimeSheetTable from './pages/TimeSheetPage'
 import { createBrowserRouter ,RouterProvider} from 'react-router-dom'
 import ProtectedRoutes from './components/routes/ProctectedRoutes'
@@ -16,8 +16,8 @@ function App() {
         element:(<LoginForm/>)
       },
       {
-        path:"/registerPage",
-        element:(<RegisterForm/>)
+        path:"/chatPage",
+        element:(<ChatPage/>)
       },
       {
         path:"/timesheetPage",

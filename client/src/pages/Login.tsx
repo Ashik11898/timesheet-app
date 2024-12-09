@@ -25,10 +25,9 @@ export default function LoginForm() {
       data:{email:email,password:password} // API endpoint
     });
     response && response.name && localStorage.setItem("username",response.name)
-    console.log(response);
-    
-    setUser(response && response.accessToken)
-    navigate("/timesheetPage")
+    setUser(response && response?.accessToken)
+    // navigate("/timesheetPage")
+    navigate("/chatPage")
   }
   
   const openRegisterPage=(e:any)=>{
