@@ -9,8 +9,8 @@ import { useWebSocket } from '../hooks/useWebSocket'; // Adjust the path as need
 
 export default function ChatPage() {
   const [message, setMessage] = useState<string>(''); // Message typed by the user
-  const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-server.vercel.app');
-  //const { messages, sendMessage, socketReady } = useWebSocket('ws://localhost:5000');
+  const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-server.vercel.app/ws');
+  //const { messages, sendMessage, socketReady } = useWebSocket('ws://localhost:5000/ws');
 
 
   const handleSubmit = (e: React.FormEvent) => {
