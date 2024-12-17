@@ -6,6 +6,7 @@ const http = require('http');
 const WebSocket = require('ws');
 const loginRoutes = require('./routes/loginRoutes');
 const streamingRoutes = require('./routes/streamRoutes');
+const { handleWebSocketConnection } = require('./handler/wsHandler');
 
 const app = express();
 app.use(express.json());
@@ -22,54 +23,12 @@ app.use('/stream', streamingRoutes);
 
 // Create HTTP server to integrate with WebSocket
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ server, path: '/ws' });
+wss.on('connection', handleWebSocketConnection); // Handling WebSocket connections here
 
-// Array to keep track of all connected clients
-const clients = [];
-const messages =[];
-
-
-wss.on('connection', function connection(ws) {
-    console.log("WS connection arrived");
-    //console.log("WS connection",ws);
-    // Add the new connection to our list of clients
-    clients.push(ws);
-
-    ws.on('message', function incoming(userMsg) {
-        let {name,message}=JSON.parse(userMsg)
-      
-
-        // Broadcast the message to all clients
-        clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                // console.log("message",message.toString())
-                // client.send(JSON.stringify({ type: 'echo', message: message }));
-                if (Buffer.isBuffer(message)) {
-                    // Convert the buffer to a string using fromCharCode (assuming ASCII values)
-                    const decodedMessage = String.fromCharCode(...message);
-                   
-                    console.log('Decoded message from buffer:', decodedMessage);
-        
-                    // Echo the decoded message back to the client
-                    client.send(JSON.stringify({ name: decodedName, message: decodedMessage }));
-                } else {
-                    // If it's a string, simply echo it back as is
-                    client.send(JSON.stringify({ name:name, message: message }));
-                }
-            }
-        });
-    });
-
-    ws.on('close', () => {
-        // Remove the client from the array when it disconnects
-        const index = clients.indexOf(ws);
-        if (index > -1) {
-            clients.splice(index, 1);
-        }
-    });
-    console.log("total no of clients:",clients.length);
-    // Send a welcome message on new connection
-    ws.send(JSON.stringify({ name: 'server',message:"welcome to the chat"  }));
+// WebSocket status route (optional)
+app.get('/ws/status', (req, res) => {
+    res.json({ connectedClients: clients.length });
 });
 
 // Start the HTTP server (with WebSocket support)
