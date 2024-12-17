@@ -22,12 +22,12 @@ app.use('/stream', streamingRoutes);
 
 // Create HTTP server to integrate with WebSocket
 const server = http.createServer(app);
-const clients = [];
-const messages =[];
-// Integrate WebSocket with the HTTP server
 const wss = new WebSocket.Server({ server });
 
 // Array to keep track of all connected clients
+const clients = [];
+const messages =[];
+
 
 wss.on('connection', function connection(ws) {
     console.log("WS connection arrived");
