@@ -1,6 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { axiosRequest } from "@/service/axiosHelper";
-import { useLocation } from "react-router-dom";
 
 type AuthContextType = {
   user: string | null;
