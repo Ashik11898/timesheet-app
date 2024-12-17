@@ -1,4 +1,5 @@
 import { FieldConfig } from '@/hooks/useRegistrationForm'
+import {TransferListType} from "./types/timesheet"
 import * as z from 'zod'
 export const formFields: FieldConfig[] = [
     {
@@ -68,3 +69,26 @@ export const formFields: FieldConfig[] = [
       }),
     },
   ]
+
+export const TRANSFER_LIST:TransferListType[] =[
+  {
+  date:"",
+  date_Label:"",
+  pickup_Point:"",
+  destination_Point:"",
+  Points_Label:["Select a Pickup point", "Select a Destination point", "Please select the point A of this transfer", "Please select the point B of this transfer"],
+  pickup_Point_details:"Blue bay",
+  destination_Point_details:"Belle mare",
+},
+{
+  date:"",
+  date_Label:"",
+  pickup_Point:"Airport",
+  destination_Point:"Lux grand bae",
+  Points_Label:["Select a Pickup point", "Select a Destination point", "Please select the point A of this transfer", "Please select the point B of this transfer"],
+  pickup_Point_details:"Blue bay",
+  destination_Point_details:"Belle mare",
+}
+
+
+]  

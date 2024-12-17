@@ -34,6 +34,7 @@ const checkCredentials =(credentials, email, password)=> {
 const verifyToken = (req, res, next) => {
     const cookies = req.cookies.jwt;
     if (!cookies) return res.status(401).json({ message: 'No token provided user needs to login' });
+    console.log("cookies",cookies);
 
     jwt.verify(cookies, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
         if (err) return res.status(403).json({ message: 'Invalid token' });

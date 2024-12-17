@@ -42,3 +42,15 @@ export type TimeSheetTableRowsProps = {
   setSelectedDay: (day: string) => void;
   setTempEntry: (entry: TimeEntry | null) => void;
 }
+
+export type TransferListType = {
+  date: string;
+  date_Label: string;
+  pickup_Point: string;
+  destination_Point: string;
+  Points_Label: [string,string,string, string]
+  pickup_Point_details: string;
+  destination_Point_details: string;
+};
+
+

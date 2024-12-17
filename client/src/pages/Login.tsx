@@ -26,8 +26,9 @@ export default function LoginForm() {
     });
     response && response.name && localStorage.setItem("username",response.name)
     setUser(response && response?.accessToken)
+    navigate("/dashboard")
     // navigate("/timesheetPage")
-    navigate("/chatPage")
+    //navigate("/streamPage")
   }
   
   const openRegisterPage=(e:any)=>{

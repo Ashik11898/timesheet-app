@@ -5,6 +5,8 @@ import TimeSheetTable from './pages/TimeSheetPage'
 import { createBrowserRouter ,RouterProvider} from 'react-router-dom'
 import ProtectedRoutes from './components/routes/ProctectedRoutes'
 import AuthProvider from "./context/AuthContext"
+import StreamPage from './pages/StreamPage'
+import Dashboard from './pages/Dashboard'
 
 function App() {
 
@@ -15,13 +17,23 @@ function App() {
         path:"/",
         element:(<LoginForm/>)
       },
+
+
       {
         path:"/chatPage",
-        element:(<ChatPage/>)
+        element:(<ProtectedRoutes><ChatPage/></ProtectedRoutes>)
+      },
+      {
+        path:"/dashboard",
+        element:(<ProtectedRoutes><Dashboard/></ProtectedRoutes>)
       },
       {
         path:"/timesheetPage",
         element:(<ProtectedRoutes><TimeSheetTable/></ProtectedRoutes>)
+      },
+      {
+        path:"/streamPage",
+        element:(<ProtectedRoutes><StreamPage/></ProtectedRoutes>)
       }
     ]
   )

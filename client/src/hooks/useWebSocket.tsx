@@ -18,7 +18,7 @@ export const useWebSocket = (url: string) => {
 
     socket.onmessage = (event) => {
       const receivedMessage = JSON.parse(event.data);
-      console.log("receivedMessage:", receivedMessage);
+      console.log("receivedMessage from server:", receivedMessage);
       
       setMessages((prevMessages) => [...prevMessages, receivedMessage]);
     };
@@ -41,9 +41,17 @@ export const useWebSocket = (url: string) => {
     };
   }, [url]); // Depend on URL, in case it's changed
 
+
+
   const sendMessage = (message: string) => {
-    if (socketRef.current?.readyState === WebSocket.OPEN) {
-      socketRef.current.send(JSON.stringify({ description: message }));
+  
+
+    
+    if (socketRef.current?.readyState === 1) {
+      // socketRef.current.send(JSON.stringify({ description: message }));
+      console.log("send msg:",message);
+      let username = localStorage.getItem("username")
+      socketRef.current.send(JSON.stringify({ name: username, message: message }));
     } else {
       console.error('WebSocket is not open. Message not sent.');
     }

@@ -6,6 +6,8 @@ const ProtectedRoutes = ({ children }: PropsWithChildren) => {
   const {user} = useUserContext();
   const navigate = useNavigate();
 
+  console.log("user context",user);
+  
   useEffect(() => {
     if (!user) {
       navigate("/", { replace: true });
