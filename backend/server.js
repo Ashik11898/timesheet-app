@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const path =require('path')
 const http = require('http');
 const WebSocket = require('ws');
 const loginRoutes = require('./routes/loginRoutes');
@@ -17,10 +18,23 @@ app.use(cors({
     credentials: true // Allow cookies to be sent
 }));
 
+
+const __dirname = path.resolve();
+
+
+
 // LOGIN ROUTES
 app.use('/api', loginRoutes);
 // STREAM ROUTES
 app.use('/stream', streamingRoutes);
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname,"../frontend/dist")))
+
+    app.get("*",(req,res)=>{
+        res.sendFile(path.join(__dirname,"../frontend","dist","index.html"))
+    })
+}
 
 // Create HTTP server to integrate with WebSocket
 const server = http.createServer(app);

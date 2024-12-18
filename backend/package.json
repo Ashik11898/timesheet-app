@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.7",
+    "timesheet-app": "file:..",
     "ws": "^8.18.0"
   }
 }
