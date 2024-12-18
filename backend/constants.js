@@ -1,4 +1,4 @@
- const userCredentials = [
+ export const userCredentials = [
     {
         username: 'Mohamed Ashik',
         password: '!2asdf#Ad',
@@ -15,4 +15,3 @@
 
       
 
-module.exports = {userCredentials}  
