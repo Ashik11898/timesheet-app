@@ -1,5 +1,5 @@
 
-const getTime=(req,res)=>{
+export const getTime=(req,res)=>{
     // Set the necessary headers for SSE
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
@@ -27,4 +27,3 @@ const getTime=(req,res)=>{
 
 
 
-module.exports = {getTime} 
