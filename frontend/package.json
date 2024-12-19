@@ -34,6 +34,7 @@
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "timesheet-app": "file:..",
+    "uuid": "^11.0.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {

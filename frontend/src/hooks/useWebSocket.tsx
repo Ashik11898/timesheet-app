@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useWebSocket = (url: string) => {
   const [messages, setMessages] = useState<any[]>([]); // Store received messages
@@ -44,11 +45,14 @@ export const useWebSocket = (url: string) => {
 
 // sending message to socket
   const sendMessage = (message: string) => {
+    let now = new Date();
+    let currentTime = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit'});
+
     if (socketRef.current?.readyState === 1) {
       // socketRef.current.send(JSON.stringify({ description: message }));
       console.log("send msg:",message);
       let username = localStorage.getItem("username")
-      socketRef.current.send(JSON.stringify({ name: username, message: message }));
+      socketRef.current.send(JSON.stringify({ name: username, message: message,messageId:uuidv4(),time:currentTime}));
     } else {
       console.error('WebSocket is not open. Message not sent.');
     }

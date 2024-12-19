@@ -10,14 +10,17 @@ export const handleWebSocketConnection = (ws) => {
 
   // Handle incoming messages from clients
   ws.on("message", function incoming(userMsg) {
-    const { name, message } = JSON.parse(userMsg);
+    const { name, message,messageId,time } = JSON.parse(userMsg);
     console.log(name, message );
+    const socket = ws._socket
+    console.log(`Connection from ${socket.remoteAddress}:${socket.remotePort}`);
+    
     
     // Broadcast the message to all connected clients
     clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
         console.log("server recive msg",message);
-        client.send(JSON.stringify({ name: name, message: message }));
+        client.send(JSON.stringify({ name: name, message: message,messageId:messageId,time:time }));
       }
       else{
         console.log("its not ready state");
@@ -37,5 +40,5 @@ export const handleWebSocketConnection = (ws) => {
   });
 
   // Send a welcome message on new connection
-  ws.send(JSON.stringify({ name: "server", message: "Welcome to the chat" }));
+  // ws.send(JSON.stringify({ name: "server", message: "Welcome to the chat",messageId:"serverID" }));
 };
