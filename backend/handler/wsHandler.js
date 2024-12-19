@@ -20,7 +20,7 @@ export const handleWebSocketConnection = (ws) => {
     clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
         console.log("server recive msg",message);
-        client.send(JSON.stringify({ name: name, message: message,messageId:messageId,time:time }));
+        client.send(JSON.stringify({ name: name, message: message,messageId:messageId,time:time,status:"online" }));
       }
       else{
         console.log("its not ready state");
@@ -40,5 +40,8 @@ export const handleWebSocketConnection = (ws) => {
   });
 
   // Send a welcome message on new connection
-  // ws.send(JSON.stringify({ name: "server", message: "Welcome to the chat",messageId:"serverID" }));
+ //ws.send(JSON.stringify({ name: "server", message: "Welcome to the chat",messageId:"serverID" }));
+ 
 };
+
+
