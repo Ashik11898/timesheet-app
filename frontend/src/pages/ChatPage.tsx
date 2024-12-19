@@ -9,8 +9,8 @@ import { useWebSocket } from '../hooks/useWebSocket'; // Adjust the path as need
 
 export default function ChatPage() {
   const [message, setMessage] = useState<string>(''); // Message typed by the user
-  const { messages, sendMessage, socketReady } = useWebSocket('http://localhost:5000/ws');
-  //const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-rb2n.onrender.com/ws');
+  // const { messages, sendMessage, socketReady } = useWebSocket('http://localhost:5000/ws');
+  const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-rb2n.onrender.com/ws');
   let username = localStorage.getItem("username")
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,6 +61,7 @@ export default function ChatPage() {
           </form>
         </CardFooter>
       </Card>
+      
     </div>
   );
 }
