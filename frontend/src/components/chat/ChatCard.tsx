@@ -13,7 +13,7 @@ const ChatCard = ({ username, messages, socketReady, message, setMessage, handle
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="h-[60vh] overflow-y-auto p-6 space-y-6">
+      <CardContent className="h-[65vh] overflow-y-auto  p-6 space-y-6 message-box">
         {messages.map((msg) => (
           <div
             key={msg.messageId}
