@@ -9,7 +9,7 @@ import { useWebSocket } from '../hooks/useWebSocket'; // Adjust the path as need
 
 export default function ChatPage() {
   const [message, setMessage] = useState<string>(''); // Message typed by the user
-  //const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-server.vercel.app/ws');
+  //const { messages, sendMessage, socketReady } = useWebSocket('http://localhost:5000/ws');
   const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-rb2n.onrender.com/ws');
 
 

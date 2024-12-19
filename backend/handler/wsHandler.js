@@ -17,15 +17,8 @@ export const handleWebSocketConnection = (ws) => {
     // Broadcast the message to all connected clients
     clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
-        if (Buffer.isBuffer(message)) {
-          // Decode message if it is a buffer
-          const decodedMessage = String.fromCharCode(...message);
-          console.log("Decoded message from buffer:", decodedMessage);
-          client.send(JSON.stringify({ name: name, message: decodedMessage }));
-        } else {
-          console.log("Decoded message from buffer2:", decodedMessage);
-          client.send(JSON.stringify({ name: name, message: message }));
-        }
+        console.log("server recive msg",message);
+        client.send(JSON.stringify({ name: name, message: message }));
       }
       else{
         console.log("its not ready state");
@@ -36,9 +29,11 @@ export const handleWebSocketConnection = (ws) => {
 
   // Remove client from the list when connection is closed
   ws.on("close", () => {
+    console.log("WS connection closed");
     const index = clients.indexOf(ws);
     if (index > -1) {
       clients.splice(index, 1);
+      console.log("WS connection closed");
     }
   });
 
