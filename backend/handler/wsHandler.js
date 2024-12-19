@@ -12,7 +12,8 @@ export const handleWebSocketConnection = (ws) => {
   // Handle incoming messages from clients
   ws.on("message", function incoming(userMsg) {
     const { name, message } = JSON.parse(userMsg);
-
+    console.log(name, message );
+    
     // Broadcast the message to all connected clients
     clients.forEach((client) => {
       if (client.readyState === WebSocketServer.OPEN) {
@@ -22,6 +23,7 @@ export const handleWebSocketConnection = (ws) => {
           console.log("Decoded message from buffer:", decodedMessage);
           client.send(JSON.stringify({ name: name, message: decodedMessage }));
         } else {
+          console.log("Decoded message from buffer2:", decodedMessage);
           client.send(JSON.stringify({ name: name, message: message }));
         }
       }

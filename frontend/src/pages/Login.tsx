@@ -21,7 +21,7 @@ export default function LoginForm() {
     
     const response = await axiosRequest<LoginResponse>({
       method: 'POST',
-      url: '/api/login',
+      url: '/login',
       data:{email:email,password:password} // API endpoint
     });
     response && response.name && localStorage.setItem("username",response.name)

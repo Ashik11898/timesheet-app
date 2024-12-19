@@ -42,11 +42,8 @@ export const useWebSocket = (url: string) => {
   }, [url]); // Depend on URL, in case it's changed
 
 
-
+// sending message to socket
   const sendMessage = (message: string) => {
-  
-
-    
     if (socketRef.current?.readyState === 1) {
       // socketRef.current.send(JSON.stringify({ description: message }));
       console.log("send msg:",message);

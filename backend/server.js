@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import dotenv from 'dotenv';
 import path from "path";
 import http from "http";
 import { WebSocketServer } from "ws"; // `ws` exports WebSocketServer for ES modules
@@ -25,6 +26,7 @@ app.use(
     credentials: true, // Allow cookies to be sent
   })
 );
+dotenv.config();
 
 // Get the current directory name using ES modules
 const __dirname = path.resolve();
@@ -53,6 +55,8 @@ wss.on("connection", handleWebSocketConnection);
 
 // WebSocket status route (optional)
 app.get("/ws/status", (req, res) => {
+  console.log("ws response:",res);
+  
   res.json({ connectedClients: clients.length });
 });
 
