@@ -1,4 +1,3 @@
-import { WebSocketServer } from "ws";
 
 // Array to keep track of all connected clients
 const clients = [];
@@ -33,7 +32,7 @@ export const handleWebSocketConnection = (ws) => {
     const index = clients.indexOf(ws);
     if (index > -1) {
       clients.splice(index, 1);
-      console.log("WS connection closed");
+      console.log("WS connection closed 1");
     }
   });
 

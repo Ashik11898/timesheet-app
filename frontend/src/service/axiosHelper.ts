@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // Create an Axios instance with default settings
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.MODE === "development" ?'http://localhost:5000/api':'',
+  baseURL: import.meta.env.MODE === "development" ?'http://localhost:5000':'',
    headers: {
     'Content-Type': 'application/json',
   },
