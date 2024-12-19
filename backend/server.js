@@ -54,11 +54,11 @@ const wss = new WebSocketServer({ server, path: "/ws" });
 wss.on("connection", handleWebSocketConnection);
 
 // WebSocket status route (optional)
-app.get("/ws/status", (req, res) => {
-  console.log("ws response:",res);
+// app.get("/ws/", (req, res) => {
+//   console.log("ws response:",res);
   
-  res.json({ connectedClients: clients.length });
-});
+//   res.json({ connectedClients: clients.length });
+// });
 
 // Start the HTTP server (with WebSocket support)
 const PORT = process.env.PORT || 5000;

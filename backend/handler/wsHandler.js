@@ -16,7 +16,7 @@ export const handleWebSocketConnection = (ws) => {
     
     // Broadcast the message to all connected clients
     clients.forEach((client) => {
-      if (client.readyState === WebSocketServer.OPEN) {
+      if (client.readyState === ws.OPEN) {
         if (Buffer.isBuffer(message)) {
           // Decode message if it is a buffer
           const decodedMessage = String.fromCharCode(...message);
@@ -26,6 +26,10 @@ export const handleWebSocketConnection = (ws) => {
           console.log("Decoded message from buffer2:", decodedMessage);
           client.send(JSON.stringify({ name: name, message: message }));
         }
+      }
+      else{
+        console.log("its not ready state");
+        
       }
     });
   });
