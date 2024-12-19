@@ -21,7 +21,7 @@ export default function ChatPage() {
 
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#F2E5BF] p-6">
+    <div className="flex justify-center min-h-screen bg-[#F2E5BF] sm:p-6 p-1 sm:items-center items-start">
      <ChatCard
         username={username}
         messages={messages}
