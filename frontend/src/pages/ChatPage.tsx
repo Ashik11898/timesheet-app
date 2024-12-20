@@ -5,8 +5,8 @@ import { useWebSocket } from '../hooks/useWebSocket';
 
 export default function ChatPage() {
   const [message, setMessage] = useState<string>(''); 
-  // const { messages, sendMessage, socketReady } = useWebSocket('http://localhost:5000/ws');
-  const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-rb2n.onrender.com/ws');
+   const { messages, sendMessage, socketReady } = useWebSocket('http://localhost:5000/ws');
+  //const { messages, sendMessage, socketReady } = useWebSocket('wss://timesheet-app-rb2n.onrender.com/ws');
   let username = localStorage.getItem("username")
 
   const handleSubmit = (e: React.FormEvent) => {

@@ -1,6 +1,9 @@
+// import { userCredentials } from "../constants";
+
 
 // Array to keep track of all connected clients
 const clients = [];
+//const onlineUsers = userCredentials
 
 export const handleWebSocketConnection = (ws) => {
   console.log("WS connection arrived");

@@ -12,6 +12,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState(false)
   const {setUser}=useUserContext()
   const navigate =useNavigate()
 
@@ -24,10 +25,17 @@ export default function LoginForm() {
       url: '/api/login',
       data:{email:email,password:password} // API endpoint
     });
-    response && response.name && localStorage.setItem("username",response.name)
-    setUser(response && response?.accessToken)
-    navigate("/dashboard")
-    // navigate("/timesheetPage")
+console.log(response, typeof response);
+
+    if(response === null){
+      setError(true)
+    }else{
+      response && response.name && localStorage.setItem("username",response.name)
+      setUser(response && response?.accessToken)
+      navigate("/dashboard")
+    }
+   
+    //navigate("/timesheetPage")
     //navigate("/streamPage")
   }
   
@@ -36,6 +44,8 @@ export default function LoginForm() {
     navigate("/registerPage")
   }
 
+  console.log(error,"error");
+  
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-[#257180] p-6">
       <div className="w-full max-w-md bg-[#F2E5BF] p-8 rounded-lg shadow-lg">
@@ -86,6 +96,7 @@ export default function LoginForm() {
             </div>
           </div>
           <Button type="submit" className="w-full bg-[#FD8B51] text-[#F2E5BF] hover:bg-[#CB6040] transition-colors duration-300 text-lg py-3">Sign In</Button>
+          {error && <div className="text-[#FB4141] text-base font-semibold">Invalid email or password</div>}
           <div className="text-sm flex justify-between">
               <a href="#" className="font-medium text-[#CB6040] hover:text-[#FD8B51]">Forgot your password?</a>
               <div onClick={(e)=>openRegisterPage(e)} className="font-medium text-[#CB6040] hover:text-[#FD8B51]">Create Employee</div>

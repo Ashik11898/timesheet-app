@@ -6,7 +6,7 @@ export type User ={
 
 export type LoginResponse = {
     name: string | null;
-    accessToken:string
+    accessToken:string | null
 };
   
 export type ChatResponse = {
