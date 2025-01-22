@@ -18,6 +18,9 @@ console.log(name);
   if(name === "stream"){
     navigate("/streamPage")
   }
+  if(name === "cover"){
+    navigate("/coverLetter")
+  }
 
   }
 
@@ -43,6 +46,9 @@ console.log(name);
             </div>
             <div className="p-4 text-white rounded shadow" style={{ backgroundColor: "#FD8B51" }}>
               <h2 className="text-xl font-semibold text-center cursor-pointer" onClick={() => pageRedirect("chat")}>Group Chat</h2>
+            </div>
+            <div className="p-4 text-white rounded shadow" style={{ backgroundColor: "#FD8B51" }}>
+              <h2 className="text-xl font-semibold text-center cursor-pointer" onClick={() => pageRedirect("cover")}>Cover Letter</h2>
             </div>
             <div className="p-4 text-gray-800 rounded shadow" style={{ backgroundColor: "#F2E5BF" }}>
               <h2 className="text-xl font-semibold text-center cursor-pointer" onClick={() => pageRedirect("stream")}>Stream Response</h2>

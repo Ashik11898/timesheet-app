@@ -7,6 +7,7 @@ import ProtectedRoutes from './components/routes/ProctectedRoutes'
 import AuthProvider from "./context/AuthContext"
 import StreamPage from './pages/StreamPage'
 import Dashboard from './pages/Dashboard'
+import CoverLetter from './pages/CoverLetter'
 
 function App() {
 
@@ -30,6 +31,10 @@ function App() {
       {
         path:"/timesheetPage",
         element:(<ProtectedRoutes><TimeSheetTable/></ProtectedRoutes>)
+      },
+      {
+        path:"/coverLetter",
+        element:(<ProtectedRoutes><CoverLetter/></ProtectedRoutes>)
       },
       {
         path:"/streamPage",

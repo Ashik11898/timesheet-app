@@ -71,6 +71,11 @@
   }
 }
 
+.pdf-content {
+  font-size: 26px !important; /* Larger font size for PDF */
+  line-height: 1.6 !important; /* Adjust line height */
+}
+
 
 @keyframes logo-spin {
   from {
