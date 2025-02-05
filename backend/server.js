@@ -19,7 +19,7 @@ app.use(
       "http://localhost:5000",
       "http://localhost:5173",
       "http://192.168.151.119:5173",
-      "https://timesheet-app-main.vercel.app",
+      "https://timesheet-app-eight.vercel.app",
       
     ],
      // Update with your frontend origin
