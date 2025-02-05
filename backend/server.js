@@ -56,5 +56,5 @@ wss.on("connection", handleWebSocketConnection);
 
 
 // Start the HTTP server (with WebSocket support)
-const PORT = process.env.STAGGING || 5000;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log("Server is running on port:", PORT));
