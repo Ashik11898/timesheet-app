@@ -6,7 +6,7 @@ import path from "path";
 import http from "http";
 import { WebSocketServer } from "ws"; // `ws` exports WebSocketServer for ES modules
 import loginRoutes from "./routes/loginRoutes.js";
-import streamingRoutes from "./routes/streamRoutes.js";
+// import streamingRoutes from "./routes/streamRoutes.js";
 import { handleWebSocketConnection } from "./handler/wsHandler.js";
 
 // Initialize the Express app
@@ -35,7 +35,7 @@ const __dirname = path.resolve();
 app.use("/api", loginRoutes);
 
 // STREAM ROUTES
-app.use("/stream", streamingRoutes);
+// app.use("/stream", streamingRoutes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
