@@ -15,14 +15,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin:"*",
-    
-    // [
-    //   "http://localhost:5000",
-    //   "http://localhost:5173",
-    //   "https://timesheet-app-main.vercel.app",
+    origin:[
+      "http://localhost:5000",
+      "http://localhost:5173",
+      "http://192.168.151.119:5173",
+      "https://timesheet-app-main.vercel.app",
       
-    // ],
+    ],
      // Update with your frontend origin
     credentials: true, // Allow cookies to be sent
   })
@@ -57,5 +56,5 @@ wss.on("connection", handleWebSocketConnection);
 
 
 // Start the HTTP server (with WebSocket support)
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.STAGGING || 5000;
 server.listen(PORT, () => console.log("Server is running on port:", PORT));
