@@ -22,7 +22,7 @@ app.use(
       "https://timesheet-app-eight.vercel.app",
       
     ],
-     // Update with your frontend origin
+    methods: ['POST'],
     credentials: true, // Allow cookies to be sent
   })
 );
