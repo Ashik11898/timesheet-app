@@ -51,7 +51,7 @@ const server = http.createServer(app);
 const wss = new WebSocketServer({ server, path: "/ws" });
 
 // Handling WebSocket connections
-wss.on("connection", handleWebSocketConnection);
+wss.on("connections", handleWebSocketConnection);
 
 
 
