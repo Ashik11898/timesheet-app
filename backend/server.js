@@ -20,6 +20,7 @@ app.use(
       "http://localhost:5173",
       "http://192.168.151.119:5173",
       "https://timesheet-app-eight.vercel.app",
+      "https://timesheet-app-rb2n.onrender.com",
       
     ],
     methods: ['POST'],
@@ -33,6 +34,12 @@ const __dirname = path.resolve();
 
 // LOGIN ROUTES
 app.use("/api", loginRoutes);
+
+app.use((req, res, next) => {
+  console.log(`Request method: ${req.method}, Request URL: ${req.url}`);
+  next();
+});
+
 
 // STREAM ROUTES
 // app.use("/stream", streamingRoutes);

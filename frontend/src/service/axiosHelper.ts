@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // Create an Axios instance with default settings
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.MODE === "development" ?'http://localhost:5000':'https://timesheet-app-eight.vercel.app',
+  baseURL: import.meta.env.MODE === "development" ?'http://localhost:5000':'https://timesheet-app-rb2n.onrender.com',
    headers: {
     'Content-Type': 'application/json',
   },
